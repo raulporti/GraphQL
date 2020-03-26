@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/clientes', {useNewUrlParser: true});
@@ -32,4 +33,23 @@ const pedidosSchema = new mongoose.Schema({
     estado: String
 });
 const Pedidos = mongoose.model('pedidos', pedidosSchema);
-export { Clientes, Productos, Pedidos };
+
+const usuariosSchema = new mongoose.Schema({
+    usuario: String,
+    password: String
+});
+usuariosSchema.pre('save', function(next){
+    if(!this.isModified('password')){
+        return next();
+    }
+    bcrypt.genSalt(10,(err, salt)=>{
+        if(err) return next(err);
+        bcrypt.hash(this.password, salt, (err, hash)=>{
+            if(err) return next(err);
+            this.password = hash;
+            next();    
+        })    
+    })
+});
+const Usuarios = mongoose.model('usuarios', usuariosSchema);
+export { Clientes, Productos, Pedidos, Usuarios };

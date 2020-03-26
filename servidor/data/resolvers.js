@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
-import { Clientes, Productos, Pedidos } from './db';
+import { Clientes, Productos, Pedidos, Usuarios } from './db';
 import { rejects } from 'assert';
-import { promises } from 'dns';
-
 export const resolvers = {
     Query: {
         getClientes : (root,  {limite, offset}) => {
@@ -59,8 +57,44 @@ export const resolvers = {
                     else resolve(pedido);
                 })    
             })
+        },
+        topClientes : (root)=>{
+            return new Promise((resolve, object)=> {
+                Pedidos.aggregate([
+                    {
+                         $match : {estado: "COMPLETADO"}
+                        },
+                    {
+                        $group : { 
+                                _id : "$cliente",
+                                total : {$sum : "$total"}
+                            }
+                        },
+                     {
+                        $lookup : {
+                                from : "clientes",
+                                localField: '_id',
+                                foreignField : '_id',
+                                as : 'cliente'
+                            }
+                        },
+                        {
+                            $sort : {
+                                 total : -1   
+                                }
+                            },
+                            {
+                                $limit : 1
+                                }
+                ],(error, resultado)=>{
+                    if(error) rejects(error);
+                    else resolve(resultado);
+                })                   
+            })
         }
     },
+
+        
     Mutation: {
         crearCliente: (root, {input}) => {
             const nuevoCliente = new Clientes({
@@ -173,6 +207,17 @@ export const resolvers = {
                     else resolve('Se actualizo correctamente')
                 })
             })    
+        },
+        crearUsuario: async (root, {usuario, password})=>{
+            const existeUsuario = await Usuarios.findOne({usuario});
+            if(existeUsuario){
+                throw new Error('El usuario ya existe');
+            }
+            const nuevoUsuario = await new Usuarios ({
+                usuario,
+                password 
+            }).save(); 
+            return "Creado Correctamente";           
         }
     }
 }

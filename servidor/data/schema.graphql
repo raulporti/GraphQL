@@ -34,6 +34,11 @@
       cantidad: Int 
    }
 
+   type ClienteTotal {
+        total: Float
+        cliente : [Cliente]    
+   }
+
    """Asigna la categoria del cliente"""
    enum TipoCliente {
        BASICO
@@ -56,6 +61,9 @@
 
        #Pedidos
        obtenerPedidos(cliente: String) : [Pedido]
+
+       #graficas
+       topClientes : [ClienteTotal]
    }
    """Campos para los Clientes Nuevos"""
    input ClienteInput {
@@ -102,4 +110,6 @@
        nuevoPedido(input: PedidoInput): Pedido
        actualizarEstado(input: PedidoInput): String
 
+        #Usuarios
+        crearUsuario(usuario: String!, password: String!): String
    }

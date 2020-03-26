@@ -71,4 +71,11 @@ mutation actualizarEstado($input: PedidoInput){
   actualizarEstado(input: $input)
 }
 `;
+
+//Usuarios
+export const NUEVO_USUARIO = gql`
+mutation crearUsuario($usuario: String!, $password: String!){
+  crearUsuario(usuario: $usuario, password: $password)
+}
+`;
     

@@ -13,6 +13,7 @@ import EditarProducto from './componentes/Productos/EditarProducto';
 import NuevoPedido from './componentes/Pedidos/NuevoPedido';
 import PedidosCliente from './componentes/Pedidos/PedidosCliente';
 import Panel from './componentes/Panel/Panel';
+import Registro  from './componentes/Auth/Registro';
 const client = new ApolloClient({
  uri: "http://localhost:8000/graphql", 
  cache: new InMemoryCache({
@@ -42,6 +43,7 @@ class App extends Component {
             <Route exact path="/productos/editar/:id" component={EditarProducto}/>  
             <Route exact path="/pedidos/nuevo/:id" component={NuevoPedido}/>  
             <Route exact path="/pedidos/:id" component={PedidosCliente}/>  
+            <Route exact path="/registro" component={Registro}/> 
 
             <Route exact path="/panel" component={Panel}/>  
 

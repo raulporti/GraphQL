@@ -38,6 +38,9 @@
         total: Float
         cliente : [Cliente]    
    }
+   type Token {
+       token: String!
+   }
 
    """Asigna la categoria del cliente"""
    enum TipoCliente {
@@ -112,4 +115,5 @@
 
         #Usuarios
         crearUsuario(usuario: String!, password: String!): String
+        autenticarUsuario(usuario: String!, password: String!) : Token
    }

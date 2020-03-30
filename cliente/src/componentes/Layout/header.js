@@ -2,8 +2,7 @@ import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import CerrarSesion from './CerrarSesion';
 const Header = ({session}) => {
-    console.log(session);
-    let barra = (session.obtenerUsuario) ? <NavegacionAutenticado /> : <NavegacionNoAutenticado/>
+     let barra = (session.obtenerUsuario) ? <NavegacionAutenticado /> : <NavegacionNoAutenticado/>
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex mb-4">
             <div className="container">

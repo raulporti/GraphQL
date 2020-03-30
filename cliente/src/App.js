@@ -18,7 +18,7 @@ import Session from './componentes/Sesion';
 
   const App = ({refetch, session}) => {
     const {obtenerUsuario} = session;
-    const mensaje = (obtenerUsuario) ? `Bienvenido: ${obtenerUsuario.usuario}`: <Redirect to ="/login"/>;
+    const mensaje = (obtenerUsuario) ? `Bienvenido: ${obtenerUsuario.nombre}`: <Redirect to ="/login"/>;
     return(
       <Router>
         <Fragment>
@@ -27,10 +27,10 @@ import Session from './componentes/Sesion';
             <p className="text-right">{mensaje}</p> 
        <Switch>
             
-            <Route exact path="/clientes" component={Clientes}/>
+            <Route exact path="/clientes" render ={() => <Clientes session={session}/>}/>
             <Route exact path="/clientes/editar/:id" component={EditarCliente}/>
 
-            <Route exact path="/clientes/nuevo" component={NuevoCliente}/>
+            <Route exact path="/clientes/nuevo" render ={() => <NuevoCliente session={session}/>}/>
             <Route exact path="/productos/nuevo" component={NuevoProducto}/>
             <Route exact path="/productos" component={Productos}/>  
             <Route exact path="/productos/editar/:id" component={EditarProducto}/>  

@@ -5,14 +5,20 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 dotenv.config({path: 'variables.env'});
 import jwt from 'jsonwebtoken';
+const ObjectId = mongoose.Types.ObjectId;
 const crearToken = (usuarioLogin, secreto, expiresIn) =>{
     const {usuario} = usuarioLogin;
     return jwt.sign({usuario}, secreto, {expiresIn});
 }
 export const resolvers = {
     Query: {
-        getClientes : (root,  {limite, offset}) => {
-            return Clientes.find({}).limit(limite).skip(offset);
+        getClientes : (root,  {limite, offset, vendedor}) => {
+            let filtro;
+            if(vendedor){
+                filtro = {vendedor : new ObjectId(vendedor)};
+               // return Clientes.find().limit(limite).skip(offset);
+            }
+            return Clientes.find(filtro).limit(limite).skip(offset);
         },
         getCliente: (root, {id}) =>{
             return new Promise ((resolve, object) => {
@@ -119,7 +125,8 @@ export const resolvers = {
                 emails: input.emails,
                 edad: input.edad,
                 tipo: input.tipo,
-                pedidos: input.pedidos
+                pedidos: input.pedidos,
+                vendedor : input.vendedor
             });
             nuevoCliente.id = nuevoCliente._id;
 
@@ -223,13 +230,15 @@ export const resolvers = {
                 })
             })    
         },
-        crearUsuario: async (root, {usuario, password})=>{
+        crearUsuario: async (root, {usuario, nombre, rol, password})=>{
             const existeUsuario = await Usuarios.findOne({usuario});
             if(existeUsuario){
                 throw new Error('El usuario ya existe');
             }
             const nuevoUsuario = await new Usuarios ({
                 usuario,
+                nombre,
+                rol,
                 password 
             }).save(); 
             return "Creado Correctamente";           

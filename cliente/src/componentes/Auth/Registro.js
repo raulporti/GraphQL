@@ -6,7 +6,9 @@ import {withRouter} from 'react-router-dom';
 const initialState = {
     usuario : '',
     password : '',
-    repetirPassword : ''
+    repetirPassword : '',
+    nombre : '',
+    rol: ''
 }
 class Registro extends Component {
     state = { 
@@ -36,18 +38,18 @@ class Registro extends Component {
      }
 
      validarForm = () =>{
-         const {usuario, password, repetirPassword} = this.state;
-         const noValido = !usuario || !password || password !== repetirPassword;
+         const {usuario, password, repetirPassword, nombre, rol} = this.state;
+         const noValido = !usuario || !nombre || !rol || !password || password !== repetirPassword;
          return noValido;
      }
     render() { 
-        const {usuario, password} = this.state;
+        const {usuario, password, repetirPassword, nombre, rol} = this.state;
         return ( 
            <Fragment>
                <h1 className="text-center mb-5">Nuevo Usuario</h1>
                 <div className="row  justify-content-center">
                     <Mutation mutation={NUEVO_USUARIO}
-                              variables={{usuario, password}}  
+                              variables={{usuario, password, nombre, rol}}  
                     >
                     {(crearUsuario, {loading, error, data})=>{
                         return (
@@ -65,8 +67,22 @@ class Registro extends Component {
                                className="form-control" 
                                placeholder="Nombre Usuario" 
                                />
+                               <small className="form-text text-muted">
+                                    (Sin espacios y sin caracteres especiales)
+                               </small>
                                 </div>
-                               <div className="form-group">
+                                <div className="form-group">
+                               <label>Nombre</label>
+                               <input 
+                               onChange = {this.actualizarState}
+                               type="text" 
+                               name="nombre" 
+                               className="form-control" 
+                               placeholder="Nombre Completo" 
+                               />
+                                </div>
+                                <div className="form-row">
+                                <div className="form-group col-md-6">
                                    <label>Password</label>
                                    <input
                                    onChange = {this.actualizarState} 
@@ -85,6 +101,20 @@ class Registro extends Component {
                                        className="form-control" 
                                        placeholder="Repetir Password" 
                                    />
+                               </div>
+                                </div>
+                               <div className="form-group">
+                                    <label>Rol:</label>
+                                    <select
+                                        className ="form-control"
+                                        value = {rol}
+                                        name = "rol"
+                                        onChange = {this.actualizarState}
+                                    >
+                                        <option value="">Elegir...</option>
+                                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                        <option value="VENDEDOR">VENDEDOR</option>
+                                    </select>
                                </div>
    
                                <button 

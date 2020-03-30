@@ -41,6 +41,9 @@
    type Token {
        token: String!
    }
+   type Usuario {
+    usuario: String
+   }
 
    """Asigna la categoria del cliente"""
    enum TipoCliente {
@@ -67,6 +70,9 @@
 
        #graficas
        topClientes : [ClienteTotal]
+
+       #Usuarios
+       obtenerUsuario : Usuario
    }
    """Campos para los Clientes Nuevos"""
    input ClienteInput {

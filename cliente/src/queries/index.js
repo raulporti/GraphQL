@@ -74,3 +74,12 @@ export const TOP_CLIENTES = gql `
     }
   }
 `;
+
+//Usuarios
+export const USUARIO_ACTUAL = gql `
+  query obtenerUsuario {
+    obtenerUsuario{
+    usuario
+    }
+  }
+`;

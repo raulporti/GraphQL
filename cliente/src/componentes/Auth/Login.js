@@ -31,12 +31,13 @@ class Login extends Component {
         usuarioAutenticar().then(async({data})=>{
             localStorage.setItem('token', data.autenticarUsuario.token);
             //Ejecturar el query una vez que se haya iniciado
-
+            await this.props.refetch();
             //limpiar state
             this.limpiarState();
-
             //Redireccionar
-            
+            setTimeout(() => {
+                this.props.history.push('/panel');
+            }, 3000);
         })
      }
 

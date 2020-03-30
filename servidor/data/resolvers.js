@@ -99,10 +99,17 @@ export const resolvers = {
                     else resolve(resultado);
                 })                   
             })
+        },
+        obtenerUsuario : (root, args, {usuarioActual})=>{
+            if(!usuarioActual){
+                return null
+            } 
+            console.log(usuarioActual);
+            //Obtener el usaurio actual del request del JWT
+            const usuario = Usuarios.findOne({usuario: usuarioActual.usuario});
+            return usuario;
         }
-    },
-
-        
+    },     
     Mutation: {
         crearCliente: (root, {input}) => {
             const nuevoCliente = new Clientes({

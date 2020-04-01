@@ -28,6 +28,7 @@
        fecha: String
        cliente: ID
        estado: EstadoPedido
+       vendedor : ID
    }
    type PedidoProducto {
       id: ID
@@ -37,6 +38,10 @@
    type ClienteTotal {
         total: Float
         cliente : [Cliente]    
+   }
+   type VendedorTotal {
+       total: Float
+       vendedor : [Usuario]
    }
    type Token {
        token: String!
@@ -73,7 +78,7 @@
 
        #graficas
        topClientes : [ClienteTotal]
-
+       topVendedores: [VendedorTotal] 
        #Usuarios
        obtenerUsuario : Usuario
    }
@@ -104,6 +109,7 @@
        fecha: String
        cliente: ID
        estado: EstadoPedido
+       vendedor: ID
    }
    input PedidoProductoInput {
       id: ID

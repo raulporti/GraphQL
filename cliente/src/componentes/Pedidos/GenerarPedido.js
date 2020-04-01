@@ -20,8 +20,11 @@ const GenerarPedido = (props) => {
                     const input = {
                         pedido: productosInput,
                         total: props.total,
-                        cliente: props.id
+                        cliente: props.idCliente,
+                        vendedor: props.idVendedor
                     }
+                    //console.log(input);
+                    //return;
                     nuevoPedido({
                         variables: {input}
                     })

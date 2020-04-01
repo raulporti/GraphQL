@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Mutation} from 'react-apollo';
 import {NUEVO_USUARIO} from '../../mutations';
 import Error from '../Alertas/Error';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 const initialState = {
     usuario : '',
     password : '',
@@ -44,8 +44,11 @@ class Registro extends Component {
      }
     render() { 
         const {usuario, password, repetirPassword, nombre, rol} = this.state;
+        const rolUsuario = this.props.session.obtenerUsuario.rol;
+        const redireccion = (rolUsuario!== 'ADMINISTRADOR') ? <Redirect to ="/cliente"/> : '';
         return ( 
            <Fragment>
+               {redireccion}
                <h1 className="text-center mb-5">Nuevo Usuario</h1>
                 <div className="row  justify-content-center">
                     <Mutation mutation={NUEVO_USUARIO}

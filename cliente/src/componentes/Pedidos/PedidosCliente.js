@@ -4,9 +4,9 @@ import {OBTENER_PEDIDOS} from '../../queries';
 import '../../spinner.css';
 import Pedido from './Pedido';
 const PedidosCliente = (props) => {
-    console.log(props);
+   // console.log(props);
     const cliente = props.match.params.id;
-    console.log(cliente);
+    //console.log(cliente);
     return (
         <Fragment>
             <h1 className="text-center mb-5">Pedidos del Cliente</h1>
@@ -20,6 +20,7 @@ const PedidosCliente = (props) => {
                   </div>  
                );
                 if(error) return `Error: ${error.message}`;
+                //console.log(data);
                 return(
                         data.obtenerPedidos.map(pedido =>(
                             <Pedido

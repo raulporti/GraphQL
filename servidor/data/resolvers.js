@@ -44,7 +44,7 @@ export const resolvers = {
                 //filtro = {stock: {$gt : 0}}
                 return Productos.find({stock: {$gt : 0}}).limit(limite).skip(offset);
             }
-            return Productos.find({}).limit(limite).skip(offset);
+            return Productos.find().limit(limite).skip(offset);
         },
 
         obtenerProducto: (root, {id})=>{
@@ -106,6 +106,7 @@ export const resolvers = {
                 })                   
             })
         },
+
         obtenerUsuario : (root, args, {usuarioActual})=>{
             if(!usuarioActual){
                 return null
@@ -114,7 +115,41 @@ export const resolvers = {
             //Obtener el usaurio actual del request del JWT
             const usuario = Usuarios.findOne({usuario: usuarioActual.usuario});
             return usuario;
-        }
+        },
+        topVendedores : (root)=>{
+            return new Promise((resolve, object)=> {
+                Pedidos.aggregate([
+                    {
+                        $match : {estado: "COMPLETADO"}
+                       },
+                   {
+                       $group : { 
+                               _id : "$vendedor",
+                               total : {$sum : "$total"}
+                           }
+                       },
+                    {
+                       $lookup : {
+                               from : "usuarios",
+                               localField: '_id',
+                               foreignField : '_id',
+                               as : 'vendedor'
+                           }
+                       },
+                       {
+                           $sort : {
+                                total : -1   
+                               }
+                           },
+                           {
+                               $limit : 1
+                               }
+                ],(error, resultado)=>{
+                    if(error) rejects(error);
+                    else resolve(resultado);
+                })                   
+            })
+        },
     },     
     Mutation: {
         crearCliente: (root, {input}) => {
@@ -194,7 +229,8 @@ export const resolvers = {
                 total: input.total,
                 fecha: new Date(),
                 cliente: input.cliente,
-                estado: "PENDIENTE"
+                estado: "PENDIENTE",
+                vendedor: input.vendedor
             });
             nuevoPedido.id  = nuevoPedido._id;
             return new Promise((resolve, object) => {

@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
       apellido
       empresa
     }
-    totalClientes
+    totalClientes(vendedor : $vendedor)
    }`;
 
 export const CLIENTE_QUERY = gql `

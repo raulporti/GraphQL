@@ -82,7 +82,7 @@ class Clientes extends Component{
             </div>
                  <Paginador 
                     actual = {this.state.paginador.actual}
-                    totalClientes = {data.totalClientes}
+                    total = {data.totalClientes}
                     limite = {this.state.paginador.limite}
                     paginaAnterior = {this.paginaAnterior}
                     paginaSiguiente = {this.paginaSiguiente}

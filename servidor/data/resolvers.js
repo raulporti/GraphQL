@@ -29,9 +29,14 @@ export const resolvers = {
             });
         },
 
-        totalClientes : (root) => {
+        totalClientes : (root, {vendedor}) => {
             return new Promise((resolve, object)=>{
-                Clientes.countDocuments({}, (error, count)=>{
+                let filtro;
+            if(vendedor){
+                filtro = {vendedor : new ObjectId(vendedor)};
+               // return Clientes.find().limit(limite).skip(offset);
+            }
+                 Clientes.countDocuments(filtro, (error, count)=>{
                      if(error) rejects(error)
                      else resolve(count)   
                 } )   

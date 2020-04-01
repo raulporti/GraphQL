@@ -3,6 +3,7 @@ import {Query, Mutation} from 'react-apollo';
 import {OBTENER_PRODUCTO} from '../../queries';
 import ResumenProducto from './ResumenProducto';
 import {ACTUALIZAR_ESTADO} from '../../mutations';
+import '../../Pedidos.css';
 const Pedido = (props) => {
     const {pedido} = props;
     const fecha = new Date(Number(pedido.fecha));
@@ -54,12 +55,8 @@ const Pedido = (props) => {
                             {fecha.toLocaleString("es-GT")}
                         </span>
                     </p>
-                    <p className="card-text font-weight-bold">Total:&nbsp;  
-                         <span className="font-weight-normal"> 
-                                ${pedido.total}
-                        </span>
-                    </p>                    
-                    <h3 className="card-text text-center mb-3">Artículos del pedido</h3>
+                                       
+                    <h3 className="card-text text-center mb-3 resaltar-texto">Artículos del pedido</h3>
                     {pedido.pedido.map((producto, index) =>{
                         const {id} = producto;
                         return(
@@ -80,7 +77,12 @@ const Pedido = (props) => {
                 </Query>
                         );
                     })}
-                    
+                    <div className="d-flex align-items-center justify-content-end">
+                    <p className="card-text resaltar-texto mr-1">Total:&nbsp;  </p>
+                         <p className="font-weight-normal inc-texto"> 
+                                ${pedido.total}
+                        </p>
+                        </div>  
                 </div>
             </div>
         </div>

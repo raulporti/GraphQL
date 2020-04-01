@@ -3,6 +3,7 @@ import {Query} from 'react-apollo';
 import {OBTENER_PEDIDOS} from '../../queries';
 import '../../spinner.css';
 import Pedido from './Pedido';
+
 const PedidosCliente = (props) => {
    // console.log(props);
     const cliente = props.match.params.id;

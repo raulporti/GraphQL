@@ -14,8 +14,10 @@ import Panel from './componentes/Panel/Panel';
 import Registro  from './componentes/Auth/Registro';
 import Login from './componentes/Auth/Login';
 import Session from './componentes/Sesion';
-
-
+import GraficaClientes from './componentes/Panel/Clientes';
+import GraficaVendedores from './componentes/Panel/Vendedores';
+import Usuarios from './componentes/Auth/Usuarios';
+import EditarUsuario from './componentes/Auth/EditarResgistro';
   const App = ({refetch, session}) => {
     const {obtenerUsuario} = session;
     const mensaje = (obtenerUsuario) ? `Bienvenido: ${obtenerUsuario.nombre}`: <Redirect to ="/login"/>;
@@ -37,11 +39,12 @@ import Session from './componentes/Sesion';
             <Route exact path="/pedidos/nuevo/:id" render ={() => <NuevoPedido session={session}/>}/>  
             <Route exact path="/pedidos/:id" component={PedidosCliente}/>  
             <Route exact path="/registro" render ={() => <Registro session={session}/>}/> 
+            <Route exact path="/usuarios" component={Usuarios}/>
+            <Route exact path="/usuarios/editar/:id" component={EditarUsuario}/>
             <Route exact path="/login" render={() => <Login refetch={refetch} />}/> 
-
             <Route exact path="/panel" component={Panel}/>  
-
-            
+            <Route exact path="/grafica/clientes" component={GraficaClientes}/>
+            <Route exact path="/grafica/vendedores" component={GraficaVendedores}/>
        </Switch>
       </div>
         </Fragment>

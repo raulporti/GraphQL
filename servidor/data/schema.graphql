@@ -81,6 +81,8 @@
        topVendedores: [VendedorTotal] 
        #Usuarios
        obtenerUsuario : Usuario
+       getUsuario(id: ID!) : Usuario
+       obtenerUsuarios: [Usuario]
    }
    """Campos para los Clientes Nuevos"""
    input ClienteInput {
@@ -133,4 +135,5 @@
         #Usuarios
         crearUsuario(usuario: String!, nombre: String!, rol: String!, password: String!): String
         autenticarUsuario(usuario: String!, password: String!) : Token
+        eliminarUsuario(id: ID): String
    }

@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import CerrarSesion from './CerrarSesion';
 import BotonRegistro from './BotonRegistro';
+import BotonGraficas from './Graficas';
 const Header = ({session}) => {
      let barra = (session.obtenerUsuario) ? <NavegacionAutenticado session={session} /> : <NavegacionNoAutenticado/>
     return( 
@@ -57,6 +58,7 @@ const NavegacionAutenticado = (session) =>(
                              </Link>
                              </div>   
                     </li>
+                    <BotonGraficas session={session}/>
                     <BotonRegistro session={session}/>
                     <CerrarSesion/>  
                 </ul>

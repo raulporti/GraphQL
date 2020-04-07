@@ -85,4 +85,9 @@ mutation autenticarUsuarios($usuario: String!, $password: String!){
     token
   }
 }
-`;   
+`; 
+export const ELIMINAR_USUARIO = gql `
+mutation eliminarUsuario($id: ID){
+  eliminarUsuario(id: $id)
+}
+`;  

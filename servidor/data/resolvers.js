@@ -155,6 +155,17 @@ export const resolvers = {
                 })                   
             })
         },
+        getUsuario: (root, {id}) =>{
+            return new Promise ((resolve, object) => {
+                Usuarios.findById(id, (error, usuario) => {
+                    if(error) reject(error)
+                    else resolve(usuario)
+                });
+            });
+        },
+        obtenerUsuarios : (root,  {limite, offset}) => {
+            return Usuarios.find().limit(limite).skip(offset);
+        },
     },     
     Mutation: {
         crearCliente: (root, {input}) => {
@@ -299,6 +310,14 @@ export const resolvers = {
             return {
                 token: crearToken(nombreUsuario, process.env.SECRETO, '1hr')
             }
-        }
+        },
+        eliminarUsuario: (root, {id})=>{
+            return new Promise((resolve, object)=>{
+                Usuarios.findOneAndDelete({_id : id}, (error)=>{
+                    if(error) rejects(error)
+                    else resolve("El Usuario se elimino correctamente")
+                })
+            })
+        },
     }
 }

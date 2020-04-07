@@ -64,6 +64,7 @@ query obtenerPedido($cliente: String){
 `;
 
 //Graficas
+//Clientes
 export const TOP_CLIENTES = gql `
   query topClientes {
     topClientes{
@@ -75,6 +76,17 @@ export const TOP_CLIENTES = gql `
   }
 `;
 
+//Vendedores
+export const TOP_VENDEDORES = gql`
+query topVendedores {
+  topVendedores{
+    total
+    vendedor{
+      nombre
+    }
+  }
+}
+`;
 //Usuarios
 export const USUARIO_ACTUAL = gql `
   query obtenerUsuario {
@@ -85,4 +97,24 @@ export const USUARIO_ACTUAL = gql `
     rol
     }
   }
+`;
+export const OBTENER_USUARIOS = gql `
+query obtenerUsuarios{
+  obtenerUsuarios{
+    id
+    usuario
+    nombre
+    rol
+  }
+}
+`;
+export const OBTENER_USUARIO = gql `
+query getUsuario($id : ID!){
+  getUsuario(id: $id){
+    id
+    nombre
+    usuario
+    rol
+  }
+}
 `;

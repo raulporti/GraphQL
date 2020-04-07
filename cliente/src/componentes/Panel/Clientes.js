@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Query} from 'react-apollo';
 import {TOP_CLIENTES} from '../../queries';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 const Clientes = () => {
     return ( 
+        <Fragment>
+            <h1 className="text-center my-5">Top 10 Clientes que mas compran</h1>
         <Query query={TOP_CLIENTES}>
             {({loading, error, data})=>{
                 if(loading) return 'Cargando...';
                 if(error) return `Error ${error.message}`;
                 const topClientesGrafica = [];
+                //console.log(data);
                 data.topClientes.map((pedido, index)=>{
                     topClientesGrafica[index] = {
                         ...pedido.cliente[0],
@@ -28,6 +31,7 @@ const Clientes = () => {
                 )
             }}    
         </Query>
+        </Fragment>
      );
 }
  
